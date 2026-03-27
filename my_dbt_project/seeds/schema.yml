@@ -1,0 +1,15 @@
+version: 2
+
+seeds:
+  - name: customers
+    config:
+      column_types:
+        customer_id: bigint
+        first_name: varchar
+        last_name: varchar
+        email: varchar
+        phone: varchar
+        city: varchar
+        country: varchar
+        signup_date: date
+        customer_status: varchar
