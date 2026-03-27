@@ -1,0 +1,142 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Cleaned and standardized customer data used for downstream analytics.
+    columns:
+      - name: customer_id
+        description: Unique identifier of the customer.
+      - name: first_name
+        description: Customer first name after trimming whitespace.
+      - name: last_name
+        description: Customer last name after trimming whitespace.
+      - name: email
+        description: Lowercased and cleaned customer email address.
+      - name: phone
+        description: Customer phone number stored as text.
+      - name: city
+        description: Customer city.
+      - name: country
+        description: Customer country.
+      - name: signup_date
+        description: Date when the customer registered.
+      - name: customer_status
+        description: Standardized customer status value.
+
+  - name: stg_categories
+    description: Cleaned product category reference data.
+    columns:
+      - name: category_id
+        description: Unique identifier of the category.
+      - name: category_name
+        description: Standardized category name.
+      - name: department_name
+        description: Standardized department name.
+
+  - name: stg_products
+    description: Cleaned and typed product data prepared for analytics models.
+    columns:
+      - name: product_id
+        description: Unique identifier of the product.
+      - name: product_name
+        description: Standardized product name.
+      - name: category_id
+        description: Identifier of the category assigned to the product.
+      - name: brand
+        description: Product brand name.
+      - name: price
+        description: Selling price of the product.
+      - name: cost
+        description: Cost of the product.
+      - name: is_active
+        description: Boolean flag indicating whether the product is active.
+      - name: created_at
+        description: Date when the product was created in the source data.
+
+  - name: stg_orders
+    description: Cleaned order-level data with standardized statuses and typed date fields.
+    columns:
+      - name: order_id
+        description: Unique identifier of the order.
+      - name: customer_id
+        description: Identifier of the customer who placed the order.
+      - name: order_date
+        description: Date when the order was placed.
+      - name: order_status
+        description: Standardized order status.
+      - name: shipping_city
+        description: City where the order is delivered.
+      - name: shipping_country
+        description: Country where the order is delivered.
+
+  - name: stg_order_items
+    description: Cleaned order line data with derived amount and revenue fields.
+    columns:
+      - name: order_item_id
+        description: Unique identifier of the order item.
+      - name: order_id
+        description: Identifier of the associated order.
+      - name: product_id
+        description: Identifier of the purchased product.
+      - name: quantity
+        description: Quantity of the product purchased in the order line.
+      - name: unit_price
+        description: Selling price per unit of the product.
+      - name: discount_amount
+        description: Discount amount applied to the order item.
+      - name: revenue_before_discount
+        description: Total value of the order item before discount.
+      - name: revenue_after_discount
+        description: Revenue amount after discount.
+
+  - name: stg_payments
+    description: Cleaned payment data with standardized payment methods, statuses, and typed amounts.
+    columns:
+      - name: payment_id
+        description: Unique identifier of the payment.
+      - name: order_id
+        description: Identifier of the related order.
+      - name: payment_date
+        description: Date when the payment was processed.
+      - name: payment_method
+        description: Standardized payment method.
+      - name: payment_status
+        description: Standardized payment status.
+      - name: payment_amount
+        description: Amount associated with the payment record.
+
+  - name: stg_shipments
+    description: Cleaned shipment data enriched with calculated delivery duration.
+    columns:
+      - name: shipment_id
+        description: Unique identifier of the shipment.
+      - name: order_id
+        description: Identifier of the related order.
+      - name: shipment_date
+        description: Date when the order was shipped.
+      - name: delivery_date
+        description: Date when the order was delivered, if available.
+      - name: shipment_status
+        description: Standardized shipment status.
+      - name: carrier
+        description: Name of the delivery carrier.
+      - name: shipping_cost
+        description: Cost of shipment.
+      - name: delivery_days
+        description: Number of days between shipment and delivery.
+
+  - name: stg_reviews
+    description: Cleaned review data with typed review dates and rating values.
+    columns:
+      - name: review_id
+        description: Unique identifier of the review.
+      - name: customer_id
+        description: Identifier of the customer who submitted the review.
+      - name: product_id
+        description: Identifier of the reviewed product.
+      - name: review_date
+        description: Date when the review was submitted.
+      - name: rating
+        description: Numeric product rating from 1 to 5.
+      - name: review_text
+        description: Text content of the customer review.

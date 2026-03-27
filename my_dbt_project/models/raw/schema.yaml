@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: raw_customers
+    description: Raw customer data loaded from seed files without business transformations.
+    columns:
+      - name: customer_id
+        description: Unique identifier of the customer.
+      - name: email
+        description: Customer email address.
+      - name: customer_status
+        description: Original customer status value from the source data.
+
+  - name: raw_categories
+    description: Raw product category data loaded from seed files.
+    columns:
+      - name: category_id
+        description: Unique identifier of the category.
+      - name: category_name
+        description: Name of the product category.
+      - name: department_name
+        description: Higher-level department grouping for the category.
+
+  - name: raw_products
+    description: Raw product data loaded from seed files without standardization.
+    columns:
+      - name: product_id
+        description: Unique identifier of the product.
+      - name: category_id
+        description: Category identifier associated with the product.
+      - name: is_active
+        description: Original active flag from the source data.
+
+  - name: raw_orders
+    description: Raw order data loaded from seed files.
+    columns:
+      - name: order_id
+        description: Unique identifier of the order.
+      - name: customer_id
+        description: Identifier of the customer who placed the order.
+      - name: order_status
+        description: Original order status from the source system.
+
+  - name: raw_order_items
+    description: Raw order item data representing product lines within orders.
+    columns:
+      - name: order_item_id
+        description: Unique identifier of the order item.
+      - name: order_id
+        description: Associated order identifier.
+      - name: product_id
+        description: Associated product identifier.
+
+  - name: raw_payments
+    description: Raw payment data loaded from seed files.
+    columns:
+      - name: payment_id
+        description: Unique identifier of the payment.
+      - name: order_id
+        description: Associated order identifier.
+      - name: payment_status
+        description: Original payment status from the source data.
+
+  - name: raw_shipments
+    description: Raw shipment and delivery data loaded from seed files.
+    columns:
+      - name: shipment_id
+        description: Unique identifier of the shipment.
+      - name: order_id
+        description: Associated order identifier.
+      - name: shipment_status
+        description: Original shipment status from the source data.
+
+  - name: raw_reviews
+    description: Raw customer review data loaded from seed files.
+    columns:
+      - name: review_id
+        description: Unique identifier of the review.
+      - name: customer_id
+        description: Identifier of the customer who submitted the review.
+      - name: product_id
+        description: Identifier of the reviewed product.
+        
