@@ -55,6 +55,15 @@ products as (
 
 ),
 
+categories as (
+
+    select
+        category_id,
+        category_name
+    from {{ ref('stg_categories') }}
+
+),
+
 final as (
 
     select
@@ -66,6 +75,7 @@ final as (
         oi.product_id,
         p.product_name,
         p.category_id,
+        c.category_name,
         p.brand,
         p.is_active,
 
@@ -77,7 +87,13 @@ final as (
 
         -- calculate cumulative revenue for the product up to the current order item to analyze sales trends over time
         -- for each product sort rows by date and add current revenue to all previous ones to get a running total
-        sum(oi.revenue_after_discount) over (
+        sum(
+            case
+                when o.order_status not in ('canceled', 'returned')
+                then oi.revenue_after_discount
+                else 0
+            end
+        ) over (
             partition by oi.product_id
             order by o.order_date, oi.order_item_id
         ) as cumulative_product_revenue
@@ -87,6 +103,8 @@ final as (
         on oi.order_id = o.order_id
     left join products p
         on oi.product_id = p.product_id
+    left join categories c
+        on p.category_id = c.category_id
 
 )
 
