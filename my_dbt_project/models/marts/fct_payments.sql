@@ -14,14 +14,7 @@ with payments as (
         payment_status,
         payment_amount
     from {{ ref('stg_payments') }}
-
-    {% if is_incremental() %}
-        where payment_date >= (
-            select max(payment_date)
-            from {{ this }}
-        )
-    {% endif %}
-
+    {{ incremental_date_filter('payment_date') }}
 ),
 
 orders as (

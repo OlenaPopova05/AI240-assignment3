@@ -16,14 +16,7 @@ with shipments as (
         shipping_cost,
         delivery_days
     from {{ ref('stg_shipments') }}
-
-    {% if is_incremental() %}
-        where shipment_date >= (
-            select max(shipment_date)
-            from {{ this }}
-        )
-    {% endif %}
-
+    {{ incremental_date_filter('shipment_date') }}
 ),
 
 orders as (

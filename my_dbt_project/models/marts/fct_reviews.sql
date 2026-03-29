@@ -14,14 +14,7 @@ with reviews as (
         rating,
         review_text
     from {{ ref('stg_reviews') }}
-
-    {% if is_incremental() %}
-        where review_date >= (
-            select max(review_date)
-            from {{ this }}
-        )
-    {% endif %}
-
+    {{ incremental_date_filter('review_date') }}
 ),
 
 products as (
